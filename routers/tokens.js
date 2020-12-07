@@ -19,10 +19,12 @@ router.post('/login', (req, res) => {
     user.findOne(req.body, function (err, doc) {
       if (!err) {
         if (doc) {
-          const Token = createToken({username})
+          const Token = createToken({username: username, userId: doc.id})
           res.send({
             success: true,
             message: '登录成功!',
+            username,
+            userId: doc.id,
             Token
           })
         } else {

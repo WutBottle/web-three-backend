@@ -4,7 +4,6 @@ const Schema = mongoose.Schema; // 拿到当前数据库相应的集合对象
 
 // 设计用户表的集合
 const userSchema = new Schema({ // 设计用户集合的字段以及数据类型
-  userId: String,
   username: String,
   password: String,
 })
@@ -23,7 +22,7 @@ const setToken = function (username) {
 //验证token
 const verToken = function (token) {
   return new Promise((resolve, reject) => {
-    var info = jwt.verify(token, signkey ,(error, decoded) => {
+    let info = jwt.verify(token, signKey ,(error, decoded) => {
       if (error) {
         console.log(error.message)
         return
@@ -33,4 +32,4 @@ const verToken = function (token) {
     resolve(info);
   })
 }
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('user', userSchema, 'user');

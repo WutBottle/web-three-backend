@@ -17,7 +17,9 @@ app.all('*', function (req, res, next) {
 
 const  {jwtAuth} = require("./commonFunc/jwt"); // 引入jwt token认证
 app.use(jwtAuth);
-const tokens = require('./routers/tokens')
+const tokens = require('./routers/tokens');
+const model =require('./routers/model');
 app.use('/tokens', tokens);
+app.use('/model', model);
 
 http.createServer(app).listen(network.port)
