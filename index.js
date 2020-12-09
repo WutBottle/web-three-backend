@@ -21,5 +21,6 @@ const tokens = require('./routers/tokens');
 const model =require('./routers/model');
 app.use('/tokens', tokens);
 app.use('/model', model);
+app.use(express.static('public'));
 
 http.createServer(app).listen(network.port)
