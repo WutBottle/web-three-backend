@@ -14,13 +14,14 @@ app.all('*', function (req, res, next) {
   if (req.method === "OPTIONS") res.send(200);/*让options请求快速返回*/
   else next();
 });
+app.use('/public', express.static('public'));
 
 const  {jwtAuth} = require("./commonFunc/jwt"); // 引入jwt token认证
 app.use(jwtAuth);
 const tokens = require('./routers/tokens');
-const model =require('./routers/model');
+const model = require('./routers/model');
+
 app.use('/tokens', tokens);
 app.use('/model', model);
-app.use(express.static('public'));
 
 http.createServer(app).listen(network.port)

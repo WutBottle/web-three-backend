@@ -29,20 +29,40 @@ router.get('/getModelList', (req, res) => {
   }
 })
 
-const multipart  = require('connect-multiparty');
+const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart(undefined);
-const {moveUploadedFile} = require('../commonFunc/fileOperation')
+const {uploadFileIntoDB, downloadFileFromDB, moveUploadedFile} = require('../commonFunc/fileOperation');
+const md5 = require('md5-node');
 router.post('/upload', multipartMiddleware, (req, res) => {
-  const {path: tempPath, originalFilename: fileName} = req.files.file;
-  moveUploadedFile(tempPath, './public/temp/' + req.user.userId + fileName);
+  const {path: tempPath, originalFilename} = req.files.file;
+  const suffix = /\.[^\.]+$/.exec(originalFilename);
+  const fileName = md5(req.user.userId + new Date().getTime()) + suffix;
+  moveUploadedFile(tempPath, './public/' + fileName);
   res.send({
     success: true,
     message: '上传成功',
-    name: req.user.userId + fileName,
+    name: fileName,
   });
 })
 
-router.post('addModel', (req, res) => {
-
+router.post('/addModel', (req, res) => {
+  const oneModel = new modelData({
+    ...req.body,
+    ownerId: req.user.userId,
+  })
+  oneModel.save((err) => {
+    if (err) {
+      res.send({
+        success: false,
+        message: '新增失败'
+      })
+    } else {
+      res.send({
+        success: true,
+        message: '新增成功'
+      })
+    }
+  });
 })
+
 module.exports = router;

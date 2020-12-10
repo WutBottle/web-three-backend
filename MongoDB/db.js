@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const {database} = require('../config/index');
-mongoose.connect(database).then(r => {});
+mongoose.connect(database, { useNewUrlParser: true, useUnifiedTopology: true }).then(r => {});
+
 mongoose.connection.on('connected', () => {
   console.log('数据库连接成功')
 })
