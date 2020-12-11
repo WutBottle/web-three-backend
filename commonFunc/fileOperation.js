@@ -1,19 +1,25 @@
 const mongoose = require('mongoose');
-const {database} = require('../config/index');
+const { database } = require('../config/index');
 const fs = require('fs');
 
 const moveUploadedFile = (oldPath, newPath) => {
-  fs.rename(oldPath, newPath, (err) => {
-    if (err) throw err;
-    fs.stat(newPath, (err, stats) => {
-      if (err) throw err;
-      console.log('stats: ' + JSON.stringify(stats));
-    });
-  })
+  const readStream = fs.createReadStream(oldPath);
+  const writeStream = fs.createWriteStream(newPath);
+  readStream.pipe(writeStream);
+  readStream.on('end', function () {
+    fs.unlinkSync(oldPath);
+  });
+  // fs.rename(oldPath, newPath, (err) => {
+  //   if (err) throw err;
+  //   fs.stat(newPath, (err, stats) => {
+  //     if (err) throw err;
+  //     console.log('stats: ' + JSON.stringify(stats));
+  //   });
+  // })
 }
 
 const uploadFileIntoDB = (filePath, fileName, cb) => {
-  mongoose.createConnection(database, {useNewUrlParser: true, useUnifiedTopology: true}).then(r => {
+  mongoose.createConnection(database, { useNewUrlParser: true, useUnifiedTopology: true }).then(r => {
     const gridFSBucket = new mongoose.mongo.GridFSBucket(r.db);
     const writeStream = gridFSBucket.openUploadStream(fileName);
     fs.createReadStream(filePath).pipe(writeStream).on('error', function (error) {
@@ -27,7 +33,7 @@ const uploadFileIntoDB = (filePath, fileName, cb) => {
 }
 
 const downloadFileFromDB = (fileName) => {
-  mongoose.createConnection(database, {useNewUrlParser: true, useUnifiedTopology: true}).then(r => {
+  mongoose.createConnection(database, { useNewUrlParser: true, useUnifiedTopology: true }).then(r => {
     const bucket = new mongoose.mongo.GridFSBucket(r.db, {
       chunkSizeBytes: 1024,
     });
