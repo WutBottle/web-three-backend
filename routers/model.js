@@ -11,13 +11,11 @@ router.get('/getModelList', (req, res) => {
     case 'my':
       modelData.find({ownerId: req.user.userId}, (err, docs) => {
         if (!err) {
-          if (docs.length) {
-            res.send({
-              success: true,
-              message: '获取成功',
-              data: docs,
-            })
-          }
+          res.send({
+            success: true,
+            message: '获取成功',
+            data: docs,
+          })
         } else {
           res.send({
             success: false,
@@ -31,7 +29,7 @@ router.get('/getModelList', (req, res) => {
 
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart(undefined);
-const {uploadFileIntoDB, downloadFileFromDB, moveUploadedFile} = require('../commonFunc/fileOperation');
+const {moveUploadedFile} = require('../commonFunc/fileOperation');
 const md5 = require('md5-node');
 router.post('/upload', multipartMiddleware, (req, res) => {
   const {path: tempPath, originalFilename} = req.files.file;
@@ -60,6 +58,26 @@ router.post('/addModel', (req, res) => {
       res.send({
         success: true,
         message: '新增成功'
+      })
+    }
+  });
+})
+
+const {deleteFile} = require('../commonFunc/fileOperation');
+router.post('/deleteModel', (req, res) => {
+  modelData.findByIdAndDelete(req.body.id).then(doc => {
+    if (doc) {
+      Promise.all([deleteFile('./public/' + doc.modelFileName), deleteFile('./public/' + doc.modelImgName)]).then(function (values) {
+        const status = values.findIndex(item => item !== null) === -1; // 判断是否所有文件都删除干净
+        res.send({
+          success: status,
+          message: status ? '删除成功' : '模型文件删除失败',
+        })
+      });
+    } else {
+      res.send({
+        success: false,
+        message: '删除失败',
       })
     }
   });
