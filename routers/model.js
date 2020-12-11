@@ -70,7 +70,7 @@ router.post('/deleteModel', (req, res) => {
       Promise.all([deleteFile('./public/' + doc.modelFileName), deleteFile('./public/' + doc.modelImgName)]).then(function (values) {
         const status = values.findIndex(item => item !== null) === -1; // 判断是否所有文件都删除干净
         res.send({
-          success: status,
+          success: true,
           message: status ? '删除成功' : '模型文件删除失败',
         })
       });
