@@ -1,7 +1,7 @@
 module.exports = {
   'network' : {
-    'port':4000
+    'port':3000
   },
   'jwtSecret': 'this_is_zp_app',
-  'database': 'mongodb://10.11.30.24:27017/webThree'
+  'database': 'mongodb://localhost:27017/webThree'
 };

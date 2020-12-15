@@ -83,4 +83,20 @@ router.post('/deleteModel', (req, res) => {
   });
 })
 
+router.post('/updateModel', (req, res) => {
+  modelData.updateMany({_id: req.body.id}, req.body, (err, row) => {
+    if (err) {
+      res.send({
+        success: false,
+        message: '修改失败'
+      })
+    } else {
+      res.send({
+        success: true,
+        message: '修改成功'
+      })
+    }
+  })
+})
+
 module.exports = router;
