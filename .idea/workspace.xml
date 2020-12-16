@@ -3,15 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0bec9dc2-a51d-41a0-915d-133be35ed45c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MongoDB/collection/modelData.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB/collection/modelData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/257393cc527341fb24eda5b4f294a812.stl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/6bc960e33d2da9b8c2ffecc068b95572.PNG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/6f4d42dad3eb8f63c334f7e6700514d0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/6f620ef2fc33fe602d985a41d8bb5b6d.stl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/9b70d0c414008bd6659eb28c3a05a626.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/c87c575ca2f231357bfc790f96c9e334.stl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/e37996144123803c9527529870bb56c9.PNG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/routers/model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commonFunc/jwt.js" beforeDir="false" afterPath="$PROJECT_DIR$/commonFunc/jwt.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/tokens.js" beforeDir="false" afterPath="$PROJECT_DIR$/routers/tokens.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +71,7 @@
       <workItem from="1607671498786" duration="2324000" />
       <workItem from="1607905687347" duration="1580000" />
       <workItem from="1608027156525" duration="4351000" />
-      <workItem from="1608084562240" duration="3308000" />
+      <workItem from="1608084562240" duration="9532000" />
     </task>
     <servers />
   </component>

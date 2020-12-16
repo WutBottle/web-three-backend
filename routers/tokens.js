@@ -41,7 +41,15 @@ router.post('/login', (req, res) => {
       }
     })
   }
-
-
 })
+
+const {addBlackList} = require('../commonFunc/blackList');
+router.get('/logout', (req, res) => {
+  addBlackList(req.headers.authorization); // 将token加入黑名单中
+  res.send({
+    success: true,
+    message: '成功退出',
+  })
+})
+
 module.exports = router;
