@@ -10,14 +10,14 @@ router.use(bodyParser.json());
 router.get('/getModelList', (req, res) => {
   switch (req.query.type) {
     case 'my':
-      modelData.find({
-        ownerId: req.user.userId
+      userData.findOne({
+        _id: req.user.userId
       }).sort({date: -1}).exec((err, docs) => {
         if (!err) {
           res.send({
             success: true,
             message: '获取成功',
-            data: docs,
+            data: docs.usableModel,
           })
         } else {
           res.send({
@@ -64,24 +64,40 @@ router.post('/upload', multipartMiddleware, (req, res) => {
 
 router.post('/addModel', (req, res) => {
   userData.findOne({_id: req.user.userId}).exec((err, doc) => {
-    if(!err) {
+    if (!err) {
       const oneModel = new modelData({
         ...req.body,
         ownerId: req.user.userId,
         ownerName: doc.username,
         ownerNick: doc.nickname,
       })
-      oneModel.save((err1) => {
+      // 存入模型数据
+      oneModel.save((err1, doc1) => {
         if (err1) {
           res.send({
             success: false,
-            message: '新增失败'
+            message: '存入模型失败'
           })
         } else {
-          res.send({
-            success: true,
-            message: '新增成功'
+          userData.updateOne({_id: req.user.userId}, {
+            '$push': {
+              usableModel: {...doc1}
+            }
+          }, (errPush, docPush) => {
+            if (errPush) {
+              res.send({
+                success: false,
+                message: '更新用户可使用模型失败'
+              })
+            } else {
+              res.send({
+                success: true,
+                message: '新增成功'
+              })
+              console.log(docPush);
+            }
           })
+
         }
       });
     }

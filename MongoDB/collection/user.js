@@ -7,6 +7,7 @@ const userSchema = new Schema({ // 设计用户集合的字段以及数据类型
   username: {type: String},
   nickname: {type: String},
   password: {type: String},
+  usableModel: {type: Array, default: []},
   date: {type: Date, default: Date.now},
 })
 //秘钥
