@@ -27,6 +27,22 @@ router.get('/getModelList', (req, res) => {
         }
       })
       break;
+    case 'all':
+      modelData.find({}).sort({date: -1}).exec((err, docs) => {
+        if (!err) {
+          res.send({
+            success: true,
+            message: '获取成功',
+            data: docs,
+          })
+        } else {
+          res.send({
+            success: false,
+            message: '服务器错误',
+          })
+        }
+      })
+      break;
   }
 })
 

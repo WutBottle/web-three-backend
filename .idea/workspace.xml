@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0bec9dc2-a51d-41a0-915d-133be35ed45c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MongoDB/collection/modelData.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB/collection/modelData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MongoDB/collection/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/MongoDB/collection/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commonFunc/jwt.js" beforeDir="false" afterPath="$PROJECT_DIR$/commonFunc/jwt.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routers/model.js" beforeDir="false" afterPath="$PROJECT_DIR$/routers/model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/tokens.js" beforeDir="false" afterPath="$PROJECT_DIR$/routers/tokens.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +71,8 @@
       <workItem from="1608027156525" duration="4351000" />
       <workItem from="1608084562240" duration="11387000" />
       <workItem from="1608166289790" duration="1365000" />
-      <workItem from="1608169398083" duration="1162000" />
+      <workItem from="1608169398083" duration="1371000" />
+      <workItem from="1608205743023" duration="1395000" />
     </task>
     <servers />
   </component>
