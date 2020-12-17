@@ -53,6 +53,7 @@ router.post('/addModel', (req, res) => {
         ...req.body,
         ownerId: req.user.userId,
         ownerName: doc.username,
+        ownerNick: doc.nickname,
       })
       oneModel.save((err1) => {
         if (err1) {

@@ -24,6 +24,7 @@ router.post('/login', (req, res) => {
             success: true,
             message: '登录成功!',
             username,
+            nickname: doc.nickname,
             userId: doc.id,
             Token
           })
@@ -41,6 +42,25 @@ router.post('/login', (req, res) => {
       }
     })
   }
+})
+
+router.post('/register', (req, res) => {
+  const oneModel = new user({
+    ...req.body,
+  })
+  oneModel.save(err => {
+    if (err) {
+      res.send({
+        success: false,
+        message: '注册失败'
+      })
+    } else {
+      res.send({
+        success: true,
+        message: '注册成功',
+      })
+    }
+  })
 })
 
 const {addBlackList} = require('../commonFunc/blackList');

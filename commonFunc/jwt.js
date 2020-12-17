@@ -26,7 +26,7 @@ const jwtAuth = expressJwt({
   credentialsRequired: true,
   isRevoked: isRevokedCallback,
 }).unless({
-  path: ["/tokens/login"] //不需要校验的路径
+  path: ["/tokens/login", "/tokens/register"] //不需要校验的路径
 });
 
 // 重置token黑名单

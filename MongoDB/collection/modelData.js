@@ -9,6 +9,7 @@ const modelDataSchema = new Schema({ // 设计用户集合的字段以及数据�
   ownerId: {type: String},
   isPublic: {type: Boolean},
   ownerName: {type: String},
+  ownerNick: {type: String},
   date: {type: Date, default: Date.now},
 })
 
