@@ -17,7 +17,12 @@ router.get('/getModelList', (req, res) => {
           res.send({
             success: true,
             message: '获取成功',
-            data: docs.usableModel,
+            data: docs.usableModel.map(item => {
+              return {
+                ...item,
+                isOwned: item.ownerId === req.user.userId,
+              }
+            }),
           })
         } else {
           res.send({
@@ -97,7 +102,6 @@ router.post('/addModel', (req, res) => {
               console.log(docPush);
             }
           })
-
         }
       });
     }
@@ -135,6 +139,59 @@ router.post('/updateModel', (req, res) => {
       res.send({
         success: true,
         message: '修改成功'
+      })
+    }
+  })
+})
+
+// 将模型加入用户可使用列表
+router.post('/addUsableModel', (req, res) => {
+  modelData.findOne({_id: req.body.id}).exec((err, modelDoc) => {
+    if (err) {
+      res.send({
+        success: false,
+        message: '该模型数据异常'
+      })
+    } else {
+      // $addToSet更新数组数据同时去重
+      userData.updateOne({_id: req.user.userId}, {
+        '$addToSet': {
+          usableModel: {...modelDoc}
+        }
+      }, (errPush, docPush) => {
+        if (errPush) {
+          res.send({
+            success: false,
+            message: '加入我的模型失败'
+          })
+        } else {
+          res.send({
+            success: true,
+            message: '加入我的模型库成功'
+          })
+        }
+      })
+    }
+  })
+})
+
+const mongoose =require('mongoose')
+router.post('/removeUsableModel', (req, res) => {
+  userData.updateOne({_id: req.user.userId}, {
+    '$pull': {
+      usableModel: {_id: mongoose.Types.ObjectId(req.body.id)}
+    }
+  }, (err, doc) => {
+    console.log(doc)
+    if (err) {
+      res.send({
+        success: false,
+        message: '移除失败'
+      })
+    } else {
+      res.send({
+        success: true,
+        message: '移除成功'
       })
     }
   })
