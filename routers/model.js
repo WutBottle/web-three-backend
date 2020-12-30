@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const modelData = require('../MongoDB/collection/modelData');
@@ -12,17 +12,17 @@ router.get('/getModelList', (req, res) => {
     case 'my':
       userData.findOne({
         _id: req.user.userId
-      }).sort({date: -1}).exec((err, docs) => {
+      }).populate('usableModel').lean().exec((err, docs) => {
+        // 因为拿到的是document类型的需要变成lean类型才可以对其进行Object.assign操作
         if (!err) {
           res.send({
             success: true,
             message: '获取成功',
             data: docs.usableModel.map(item => {
-              return {
-                ...item,
-                isOwned: item.ownerId === req.user.userId,
-              }
-            }),
+              return Object.assign(item, {
+                isOwned: req.user.userId === item.ownerId
+              })
+            })
           })
         } else {
           res.send({
@@ -86,7 +86,7 @@ router.post('/addModel', (req, res) => {
         } else {
           userData.updateOne({_id: req.user.userId}, {
             '$push': {
-              usableModel: {...doc1}
+              usableModel: doc1._id,
             }
           }, (errPush, docPush) => {
             if (errPush) {
@@ -179,10 +179,9 @@ const mongoose =require('mongoose')
 router.post('/removeUsableModel', (req, res) => {
   userData.updateOne({_id: req.user.userId}, {
     '$pull': {
-      usableModel: {_id: mongoose.Types.ObjectId(req.body.id)}
+      usableModel: req.body.id
     }
   }, (err, doc) => {
-    console.log(doc)
     if (err) {
       res.send({
         success: false,
