@@ -175,7 +175,6 @@ router.post('/addUsableModel', (req, res) => {
   })
 })
 
-const mongoose =require('mongoose')
 router.post('/removeUsableModel', (req, res) => {
   userData.updateOne({_id: req.user.userId}, {
     '$pull': {

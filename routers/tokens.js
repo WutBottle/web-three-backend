@@ -16,18 +16,25 @@ router.post('/login', (req, res) => {
       message: '用户名或密码不能为空!',
     })
   } else {
-    user.findOne(req.body, function (err, doc) {
+    user.findOne({username: req.body.username}, function (err, doc) {
       if (!err) {
         if (doc) {
-          const Token = createToken({username: username, userId: doc.id})
-          res.send({
-            success: true,
-            message: '登录成功!',
-            username,
-            nickname: doc.nickname,
-            userId: doc.id,
-            Token
-          })
+          if(doc.password === req.body.password) {
+            const Token = createToken({username: username, userId: doc.id})
+            res.send({
+              success: true,
+              message: '登录成功!',
+              username,
+              nickname: doc.nickname,
+              userId: doc.id,
+              Token
+            })
+          }else {
+            res.send({
+              success: false,
+              message: '密码错误!',
+            })
+          }
         } else {
           res.send({
             success: false,
