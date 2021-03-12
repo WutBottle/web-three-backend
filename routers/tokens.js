@@ -70,6 +70,36 @@ router.post('/register', (req, res) => {
   })
 })
 
+// 获取用户信息接口
+router.get('/userInfo', (req, res) => {
+  user.findOne({_id: req.user.userId}, (err, doc) => {
+    if (!err) {
+      res.send({
+        success: true,
+        message: '获取成功!',
+        data: doc,
+      })
+    }
+  })
+})
+
+// 更新用户信息
+router.post('/updateUserInfo', (req, res) => {
+  user.updateMany({_id: req.user.userId}, req.body, (err, row) => {
+    if (err) {
+      res.send({
+        success: false,
+        message: '修改失败'
+      })
+    } else {
+      res.send({
+        success: true,
+        message: '修改成功'
+      })
+    }
+  })
+})
+
 const {addBlackList} = require('../commonFunc/blackList');
 router.get('/logout', (req, res) => {
   addBlackList(req.headers.authorization); // 将token加入黑名单中

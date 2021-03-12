@@ -4,14 +4,17 @@ const Schema = mongoose.Schema; // 拿到当前数据库相应的集合对象
 
 // 设计用户表的集合
 const userSchema = new Schema({ // 设计用户集合的字段以及数据类型
-  username: {type: String},
-  nickname: {type: String},
-  password: {type: String},
+  username: {type: String, default: 'user'}, // 用户名
+  nickname: {type: String, default: '暂无'}, // 真实姓名
+  password: {type: String, default: '123456'}, // 密码
+  age: {type: Number, default: 0}, // 年龄
+  company: {type: String, default: '暂无'}, // 单位
+  major: {type: String, default: '暂无'}, // 专业方向
   usableModel: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'modelData'
-  }],
-  date: {type: Date, default: Date.now},
+  }], // 可用模型库
+  date: {type: Date, default: Date.now}, // 用户注册时间
 })
 //秘钥
 const signKey = 'this_is_zp_app';
