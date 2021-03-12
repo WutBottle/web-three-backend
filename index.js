@@ -16,10 +16,6 @@ app.all('*', function (req, res, next) {
 });
 app.use('/public', express.static('public'));
 
-// 嵌入一个接口处理格式转化
-const workerHandler = require('./routers/workerHandler');
-app.use('/workerHandler', workerHandler);
-
 const  {jwtAuth} = require("./commonFunc/jwt"); // 引入jwt token认证
 app.use(jwtAuth);
 const tokens = require('./routers/tokens');
