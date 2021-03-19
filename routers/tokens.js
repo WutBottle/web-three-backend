@@ -19,7 +19,7 @@ router.post('/login', (req, res) => {
     user.findOne({username: req.body.username}, function (err, doc) {
       if (!err) {
         if (doc) {
-          if(doc.password === req.body.password) {
+          if (doc.password === req.body.password) {
             const Token = createToken({username: username, userId: doc.id})
             res.send({
               success: true,
@@ -30,7 +30,7 @@ router.post('/login', (req, res) => {
               role: doc.role,
               Token
             })
-          }else {
+          } else {
             res.send({
               success: false,
               message: '密码错误!',
@@ -96,6 +96,27 @@ router.post('/updateUserInfo', (req, res) => {
       res.send({
         success: true,
         message: '修改成功'
+      })
+    }
+  })
+})
+
+// 获取用户列表
+router.post('/userList', (req, res) => {
+  user.find({
+    $or: [{username: new RegExp(req.body.name, 'i')}, {nickname: new RegExp(req.body.name, 'i')}],
+    role: 'user',
+  }, (err, docs) => {
+    if (err) {
+      res.send({
+        success: false,
+        message: '查询失败',
+      })
+    } else {
+      res.send({
+        success: true,
+        message: '查询成功',
+        data: docs,
       })
     }
   })
