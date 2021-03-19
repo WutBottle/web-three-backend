@@ -122,6 +122,23 @@ router.post('/userList', (req, res) => {
   })
 })
 
+// 删除用户
+router.post('/deleteUser', (req,res) => {
+  user.findByIdAndDelete(req.body.id).then(doc => {
+    if (doc) {
+      res.send({
+        success: true,
+        message: '删除成功',
+      })
+    } else {
+      res.send({
+        success: false,
+        message: '删除失败',
+      })
+    }
+  });
+})
+
 const {addBlackList} = require('../commonFunc/blackList');
 router.get('/logout', (req, res) => {
   addBlackList(req.headers.authorization); // 将token加入黑名单中
