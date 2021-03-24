@@ -51,6 +51,25 @@ router.get('/getModelList', (req, res) => {
   }
 })
 
+router.get('/getModalListByName', (req, res) => {
+  modelData.find({
+    $or: [{modelDesc: new RegExp(req.query.name, 'i')}, {modelTitle: new RegExp(req.query.name, 'i')}],
+  }).sort({date: -1}).exec((err, docs) => {
+    if (err) {
+      res.send({
+        success: false,
+        message: '查询失败',
+      })
+    } else {
+      res.send({
+        success: true,
+        message: '查询成功',
+        data: docs,
+      })
+    }
+  })
+})
+
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart(undefined);
 const {moveUploadedFile} = require('../commonFunc/fileOperation');

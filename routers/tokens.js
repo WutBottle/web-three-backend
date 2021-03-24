@@ -86,7 +86,8 @@ router.get('/userInfo', (req, res) => {
 
 // 更新用户信息
 router.post('/updateUserInfo', (req, res) => {
-  user.updateMany({_id: req.user.userId}, req.body, (err, row) => {
+  console.log(req.body)
+  user.updateMany({_id: req.body.id}, req.body, (err, row) => {
     if (err) {
       res.send({
         success: false,
