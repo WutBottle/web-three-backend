@@ -20,8 +20,7 @@ const  {jwtAuth} = require("./commonFunc/jwt"); // 引入jwt token认证
 app.use(jwtAuth);
 const tokens = require('./routers/tokens');
 const model = require('./routers/model');
-
-app.use('/tokens', tokens);
 app.use('/model', model);
+app.use('/tokens', tokens);
 
 http.createServer(app).listen(network.port)
